@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import TagView from './TagView';
 
-function App() {
+const App = () => {
+  const [tree, setTree] = useState({
+    name: 'root',
+    children: [
+      {
+        name: 'child1',
+        children: [
+          { name: 'child1-child1', data: 'c1-c1 Hello' },
+          { name: 'child1-child2', data: 'c1-c2 JS' }
+        ]
+      },
+      { name: 'child2', data: 'c2 World' }
+    ]
+  });
+
+  const updateTree = () => {
+    setTree({ ...tree });
+  };
+
+  const exportTree = () => {
+    const exportData = JSON.stringify(tree, null, 2);
+    console.log(exportData);
+    alert(exportData);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ padding: 20 }}>
+      <TagView node={tree} updateTree={updateTree} />
+      <button onClick={exportTree} style={{ marginTop: 20 }}>
+        Export
+      </button>
     </div>
   );
-}
+};
 
 export default App;
